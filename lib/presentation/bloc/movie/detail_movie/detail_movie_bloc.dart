@@ -13,8 +13,8 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
 
       result.fold((failure) {
         emit(DetailMovieError(failure.message));
-      }, (e) {
-        emit(DetailMovieLoaded(e));
+      }, (data) {
+        emit(DetailMovieLoaded(data));
       });
     });
   }

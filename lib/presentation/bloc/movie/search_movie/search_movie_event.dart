@@ -6,3 +6,14 @@ abstract class SearchMovieEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class SearchMovieSetEmpty extends SearchMovieEvent {}
+
+class OnQueryChanged extends SearchMovieEvent {
+  final String query;
+
+  OnQueryChanged(this.query);
+
+  @override
+  List<Object> get props => [query];
+}
