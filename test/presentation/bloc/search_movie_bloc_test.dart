@@ -12,8 +12,8 @@ import '../provider/movie_search_notifier_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {
-  late SearchMovieBloc searchMovieBloc;
   late MockSearchMovies mockSearchMovies;
+  late SearchMovieBloc searchMovieBloc;
 
   setUp(() {
     mockSearchMovies = MockSearchMovies();
@@ -35,33 +35,33 @@ void main() {
       );
       return searchMovieBloc;
     },
-    act: (bloc) => bloc.add(OnQueryChanged(query)),
-    expect: () => [SearchMovieLoading(), SearchMovieLoaded(movieList)],
+    act: (bloc) => bloc.add(OnQueryChangedMovie(query)),
+    expect: () => [
+      SearchMovieLoading(),
+      SearchMovieLoaded(movieList),
+    ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(query));
     },
   );
 
-  group(
-    'Search Movies BLoC Test',
-    () {
-      blocTest<SearchMovieBloc, SearchMovieState>(
-        'Should emit [Loading, Error] when get search is unsuccessful',
-        build: () {
-          when(mockSearchMovies.execute(query)).thenAnswer(
-            (_) async => Left(ServerFailure('Server Failure')),
-          );
-          return searchMovieBloc;
-        },
-        act: (bloc) => bloc.add(OnQueryChanged(query)),
-        expect: () => [
-          SearchMovieLoading(),
-          SearchMovieError('Server Failure'),
-        ],
-        verify: (bloc) {
-          verify(mockSearchMovies.execute(query));
-        },
-      );
-    },
-  );
+  group('Search Movies BLoC Test', () {
+    blocTest<SearchMovieBloc, SearchMovieState>(
+      'Should emit [Loading, Error] when get search is unsuccessful',
+      build: () {
+        when(mockSearchMovies.execute(query)).thenAnswer(
+          (_) async => Left(ServerFailure('Server Failure')),
+        );
+        return searchMovieBloc;
+      },
+      act: (bloc) => bloc.add(OnQueryChangedMovie(query)),
+      expect: () => [
+        SearchMovieLoading(),
+        SearchMovieError('Server Failure'),
+      ],
+      verify: (bloc) {
+        verify(mockSearchMovies.execute(query));
+      },
+    );
+  });
 }

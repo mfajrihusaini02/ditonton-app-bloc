@@ -6,3 +6,5 @@ abstract class PopularMovieEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class FetchPopularMovieEvent extends PopularMovieEvent {}

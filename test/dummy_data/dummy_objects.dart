@@ -22,6 +22,7 @@ final testMovie = Movie(
   voteAverage: 7.2,
   voteCount: 13507,
 );
+final testMovieList = [testMovie];
 
 final testTv = Tv(
   backdropPath: '/zGLHX92Gk96O1DJvLil7ObJTbaL.jpg',
@@ -37,8 +38,6 @@ final testTv = Tv(
   voteAverage: 6.9,
   voteCount: 1795,
 );
-
-final testMovieList = [testMovie];
 final testTvList = [testTv];
 
 final testMovieDetail = MovieDetail(
@@ -55,6 +54,7 @@ final testMovieDetail = MovieDetail(
   voteAverage: 1,
   voteCount: 1,
 );
+final testMovieDetailList = [testMovieDetail];
 
 final testTvDetail = TvDetail(
   backdropPath: 'backdropPath',
@@ -68,6 +68,7 @@ final testTvDetail = TvDetail(
   voteAverage: 1,
   voteCount: 1,
 );
+final testTvDetailList = [testTvDetail];
 
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
@@ -75,6 +76,7 @@ final testWatchlistMovie = Movie.watchlist(
   posterPath: 'posterPath',
   overview: 'overview',
 );
+final testWatchlistMovieList = [testWatchlistMovie];
 
 final testWatchlistTv = Tv.watchlist(
   id: 1,
@@ -82,6 +84,7 @@ final testWatchlistTv = Tv.watchlist(
   posterPath: 'posterPath',
   name: 'name',
 );
+final testWatchlistTvList = [testWatchlistTv];
 
 final testMovieTable = MovieTable(
   id: 1,

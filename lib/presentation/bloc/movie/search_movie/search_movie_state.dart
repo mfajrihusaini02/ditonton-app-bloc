@@ -28,12 +28,3 @@ class SearchMovieLoaded extends SearchMovieState {
   @override
   List<Object> get props => [result];
 }
-
-class SearchMovieHasData extends SearchMovieState {
-  final List<Movie> result;
-
-  SearchMovieHasData(this.result);
-
-  @override
-  List<Object> get props => [result];
-}
