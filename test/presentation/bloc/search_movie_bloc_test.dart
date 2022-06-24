@@ -17,7 +17,7 @@ void main() {
 
   setUp(() {
     mockSearchMovies = MockSearchMovies();
-    searchMovieBloc = SearchMovieBloc(searchMovies: mockSearchMovies);
+    searchMovieBloc = SearchMovieBloc(mockSearchMovies);
   });
 
   const query = "originalTitle";

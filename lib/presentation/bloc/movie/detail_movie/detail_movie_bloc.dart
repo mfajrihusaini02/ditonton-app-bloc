@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
   final GetMovieDetail getMovieDetail;
 
-  DetailMovieBloc({required this.getMovieDetail}) : super(DetailMovieEmpty()) {
+  DetailMovieBloc(this.getMovieDetail) : super(DetailMovieEmpty()) {
     on<FetchDetailMovieEvent>((event, emit) async {
       emit(DetailMovieLoading());
       final result = await getMovieDetail.execute(event.id);
