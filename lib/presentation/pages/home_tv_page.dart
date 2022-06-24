@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/tv/tv.dart';
+import 'package:ditonton/presentation/bloc/tv/on_the_air_tv/on_the_air_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/popular_tv/popular_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated_tv/top_rated_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/detail_tv_page.dart';
 import 'package:ditonton/presentation/pages/popular_tv_page.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
-import 'package:ditonton/presentation/provider/tv/tv_list_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeTvPage extends StatefulWidget {
   @override
@@ -20,11 +21,9 @@ class _HomeTvPageState extends State<HomeTvPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<TvListNotifier>(context, listen: false)
-          ..fetchOnTheAirTv()
-          ..fetchPopularTv()
-          ..fetchTopRatedTv());
+    context.read<OnTheAirTvBloc>().add(FetchOnTheAirTvEvent());
+    context.read<PopularTvBloc>().add(FetchPopularTvEvent());
+    context.read<TopRatedTvBloc>().add(FetchTopRatedTvEvent());
   }
 
   @override
@@ -48,55 +47,76 @@ class _HomeTvPageState extends State<HomeTvPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Now Playing',
+                'On The Air TV',
                 style: kHeading6,
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.onTheAirTvState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.onTheAirTv);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<OnTheAirTvBloc, OnTheAirTvState>(
+                builder: (context, state) {
+                  if (state is OnTheAirTvLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is OnTheAirTvLoaded) {
+                    return TvList(state.result);
+                  } else if (state is OnTheAirTvError) {
+                    return Text(state.message);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () =>
                     Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME),
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.popularTv);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              // Consumer<TvListNotifier>(builder: (context, data, child) {
+              //   final state = data.popularTvState;
+              //   if (state == RequestState.Loading) {
+              //     return Center(
+              //       child: CircularProgressIndicator(),
+              //     );
+              //   } else if (state == RequestState.Loaded) {
+              //     return TvList(data.popularTv);
+              //   } else {
+              //     return Text('Failed');
+              //   }
+              // }),
+              BlocBuilder<PopularTvBloc, PopularTvState>(
+                builder: (context, state) {
+                  if (state is PopularTvLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is PopularTvLoaded) {
+                    return TvList(state.result);
+                  } else if (state is PopularTvError) {
+                    return Text(state.message);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME),
               ),
-              Consumer<TvListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvList(data.topRatedTv);
-                } else {
-                  return Text('Failed');
-                }
-              }),
+              BlocBuilder<TopRatedTvBloc, TopRatedTvState>(
+                builder: (context, state) {
+                  if (state is TopRatedTvLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is TopRatedTvLoaded) {
+                    return TvList(state.result);
+                  } else if (state is TopRatedTvError) {
+                    return Text(state.message);
+                  } else {
+                    return const Text('Failed');
+                  }
+                },
+              ),
             ],
           ),
         ),

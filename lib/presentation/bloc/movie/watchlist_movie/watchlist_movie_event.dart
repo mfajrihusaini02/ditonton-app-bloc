@@ -18,14 +18,14 @@ class FetchStatusMovieEvent extends WatchlistMovieEvent {
   List<Object> get props => [id];
 }
 
-class FetchStatusTvEvent extends WatchlistMovieEvent {
-  final int id;
+// class FetchStatusTvEvent extends WatchlistMovieEvent {
+//   final int id;
 
-  const FetchStatusTvEvent(this.id);
+//   const FetchStatusTvEvent(this.id);
 
-  @override
-  List<Object> get props => [id];
-}
+//   @override
+//   List<Object> get props => [id];
+// }
 
 class AddItemMovieEvent extends WatchlistMovieEvent {
   final MovieDetail result;

@@ -20,7 +20,7 @@ void main() {
     popularTvBloc = PopularTvBloc(mockGetPopularTv);
   });
 
-  final TvList = <Tv>[];
+  final tvList = <Tv>[];
 
   test("initial state should be empty", () {
     expect(popularTvBloc.state, PopularTvEmpty());
@@ -31,14 +31,14 @@ void main() {
       'Should emit [Loading, Loaded] when data is gotten successfully',
       build: () {
         when(mockGetPopularTv.execute()).thenAnswer(
-          (_) async => Right(TvList),
+          (_) async => Right(tvList),
         );
         return popularTvBloc;
       },
       act: (bloc) => bloc.add(FetchPopularTvEvent()),
       expect: () => [
         PopularTvLoading(),
-        PopularTvLoaded(TvList),
+        PopularTvLoaded(tvList),
       ],
       verify: (bloc) {
         verify(mockGetPopularTv.execute());
