@@ -8,7 +8,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
-import '../../provider/tv/tv_detail_notifier_test.mocks.dart';
+import 'detail_tv_bloc_test.mocks.dart';
 
 @GenerateMocks([DetailTvBloc, GetTvDetail])
 void main() {

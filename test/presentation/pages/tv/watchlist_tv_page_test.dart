@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:ditonton/presentation/bloc/tv/top_rated_tv/top_rated_tv_bloc.dart';
-import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist_tv/watchlist_tv_bloc.dart';
+import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -9,29 +9,29 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../dummy_data/dummy_objects.dart';
 
-class MockTopRatedTvBloc extends MockBloc<TopRatedTvEvent, TopRatedTvState>
-    implements TopRatedTvBloc {}
+class MockWatchlistTvBloc extends MockBloc<WatchlistTvEvent, WatchlistTvState>
+    implements WatchlistTvBloc {}
 
-class FakeTopRatedTvEvent extends Fake implements TopRatedTvEvent {}
+class FakeWatchlistTvEvent extends Fake implements WatchlistTvEvent {}
 
-class FakeTopRatedTvState extends Fake implements TopRatedTvState {}
+class FakeWatchlistTvState extends Fake implements WatchlistTvState {}
 
-@GenerateMocks([TopRatedTvBloc])
+@GenerateMocks([WatchlistTvBloc])
 void main() {
-  late MockTopRatedTvBloc mockTopRatedTvsBloc;
+  late MockWatchlistTvBloc mockWatchlistTvBloc;
 
   setUp(() {
-    mockTopRatedTvsBloc = MockTopRatedTvBloc();
+    mockWatchlistTvBloc = MockWatchlistTvBloc();
   });
 
   setUpAll(() {
-    registerFallbackValue(FakeTopRatedTvEvent());
-    registerFallbackValue(FakeTopRatedTvState());
+    registerFallbackValue(FakeWatchlistTvEvent());
+    registerFallbackValue(FakeWatchlistTvState());
   });
 
   Widget _makeTestableWidget(Widget body) {
-    return BlocProvider<TopRatedTvBloc>.value(
-      value: mockTopRatedTvsBloc,
+    return BlocProvider<WatchlistTvBloc>.value(
+      value: mockWatchlistTvBloc,
       child: MaterialApp(
         home: body,
       ),
@@ -40,14 +40,14 @@ void main() {
 
   testWidgets('Should display center progress bar when loading',
       (WidgetTester tester) async {
-    when(() => mockTopRatedTvsBloc.state).thenReturn(
-      TopRatedTvLoading(),
+    when(() => mockWatchlistTvBloc.state).thenReturn(
+      WatchlistTvLoading(),
     );
 
     final progressBarFinder = find.byType(CircularProgressIndicator);
     final centerFinder = find.byType(Center);
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedTvPage()));
+    await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
 
     expect(centerFinder, findsOneWidget);
     expect(progressBarFinder, findsOneWidget);
@@ -55,26 +55,26 @@ void main() {
 
   testWidgets('Should display ListView when data is loaded',
       (WidgetTester tester) async {
-    when(() => mockTopRatedTvsBloc.state).thenReturn(
-      TopRatedTvLoaded(testTvList),
+    when(() => mockWatchlistTvBloc.state).thenReturn(
+      WatchlistTvLoaded(testTvList),
     );
 
     final listViewFinder = find.byType(ListView);
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedTvPage()));
+    await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
 
     expect(listViewFinder, findsOneWidget);
   });
 
   testWidgets('Should display text with message when Error',
       (WidgetTester tester) async {
-    when(() => mockTopRatedTvsBloc.state).thenReturn(
-      TopRatedTvError('error_message'),
+    when(() => mockWatchlistTvBloc.state).thenReturn(
+      WatchlistTvError('error_message'),
     );
 
     final textFinder = find.byKey(Key('error_message'));
 
-    await tester.pumpWidget(_makeTestableWidget(TopRatedTvPage()));
+    await tester.pumpWidget(_makeTestableWidget(WatchlistTvPage()));
 
     expect(textFinder, findsOneWidget);
   });
