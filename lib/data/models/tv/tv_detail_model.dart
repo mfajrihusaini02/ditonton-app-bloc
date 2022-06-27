@@ -68,29 +68,6 @@ class TvDetailModel extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      "backdrop_path": backdropPath,
-      "first_air_date": firstAirDate,
-      "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
-      "homepage": homepage,
-      "id": id,
-      "name": name,
-      "number_of_episodes": numberOfEpisodes,
-      "number_of_seasons": numberOfSeasons,
-      "original_language": originalLanguage,
-      "original_name": originalName,
-      "overview": overview,
-      "popularity": popularity,
-      "poster_path": posterPath,
-      "status": status,
-      "tagline": tagline,
-      "type": type,
-      "vote_average": voteAverage,
-      "vote_count": voteCount,
-    };
-  }
-
   TvDetail toEntity() {
     return TvDetail(
       backdropPath: this.backdropPath,
