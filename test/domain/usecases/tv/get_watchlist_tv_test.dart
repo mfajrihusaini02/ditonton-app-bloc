@@ -1,26 +1,28 @@
-import 'package:ditonton/domain/usecases/tv/get_watchlist_status_tv.dart';
+import 'package:dartz/dartz.dart';
+import 'package:ditonton/domain/usecases/tv/get_watchlist_tv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../dummy_data/dummy_objects.dart';
 import '../../../helpers/test_tv_helper.mocks.dart';
 
 void main() {
-  late GetWatchListStatusTv usecase;
+  late GetWatchlistTv usecase;
   late MockTvRepository mockTvRepository;
 
   setUp(() {
     mockTvRepository = MockTvRepository();
-    usecase = GetWatchListStatusTv(mockTvRepository);
+    usecase = GetWatchlistTv(mockTvRepository);
   });
 
   test('should get watchlist TV from repository', () async {
     // arrange
-    when(mockTvRepository.isAddedToWatchlistTv(1)).thenAnswer(
-      (_) async => true,
+    when(mockTvRepository.getWatchlistTv()).thenAnswer(
+      (_) async => Right(testTvList),
     );
     // act
-    final result = await usecase.execute(1);
+    final result = await usecase.execute();
     // assert
-    expect(result, true);
+    expect(result, Right(testTvList));
   });
 }
